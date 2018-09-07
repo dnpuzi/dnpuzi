@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    #div1 {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      z-index: 2;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+
+      var oDiv = document.getElementById('div1');
+
+      drag(oDiv);
+
+      function drag(obj) {
+        obj.onmousedown = function (ev) {
+          var ev = ev || event;
+          var disX = ev.clientX - this.offsetLeft;
+          var disY = ev.clientY - this.offsetTop;
+          if (obj.setCapture) {
+            obj.setCapture();
+          }
+          document.onmousemove = function (ev) {
+            var ev = ev || event;
+            var L = ev.clientX - disX;
+            var T = ev.clientY - disY;
+            var L1 = L;
+            var R1 = L + obj.offsetWidth;
+            var T1 = T;
+            var B1 = T + obj.offsetHeight;
+            obj.style.left = L + 'px';
+            obj.style.top = T + 'px';
+          }
+          document.onmouseup = function () {
+            document.onmousemove = document.onmouseup = null;
+            if (obj.releaseCapture) {
+              obj.releaseCapture();
+            }
+          }
+          return false;
+        }
+
+      }
+
+    }
+  </script>
+  </head>
+
+  <body>
+    <div id="div1"></div>
+  </body>
+
+</html>
+</body>
+
+</html>
